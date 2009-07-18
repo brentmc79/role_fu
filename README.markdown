@@ -16,21 +16,21 @@ If the model that you're adding roles to is something other than User, then you 
 
 3. Modify your model by adding 'has_role_fu'.
 
-	class User < ActiveRecord::Base
-		has_role_fu
-	end
+		class User < ActiveRecord::Base
+			has_role_fu
+		end
 	
 This does two things.  First it declares the associations with roles and role mappings.  Second, it provides boolean methods for each row in the Roles table.  So if there's a role with the name "author", then your model will have the method .author?
 
 4. Modify your controllers.
 
-	class SomeController < ApplicationController
-		has_role_fu
+		class SomeController < ApplicationController
+			has_role_fu
 		
-		def	some_action
-			#do stuff
+			def	some_action
+				#do stuff
+			end
 		end
-	end
 
 to be continued...
 
