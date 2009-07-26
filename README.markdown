@@ -63,10 +63,10 @@ And a set of actions:
 	
 You can declare your action authorization like so:
 
-		has_role_fu :do_stuff => [:author, :reader], 
-								:do_editor_stuff => :editor, 
-								:do_admin_stuff => {:only => :admin}, 
-								:do_system_stuff => :system_admin
+	has_role_fu :do_stuff => [:author, :reader], 
+				:do_editor_stuff => :editor, 
+				:do_admin_stuff => {:only => :admin}, 
+				:do_system_stuff => :system_admin
 
 This allows authors, readers, or anyone with a higher role to do_stuff.  Editors or higher can do_editor_stuff.  Only admins can do_admin_stuff.  Using the :only option explicity states the accepted role and DOESN'T take into account the role hierarchy.  In other words, admins can do admin stuff, but the parent role system_admin can't.
 
