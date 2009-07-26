@@ -48,18 +48,18 @@ RoleFu assumes that you're using some form of authorization that exposes the act
 
 Given a set of roles:
 
-  system_admin
-    admin
-    editor
-      author
-      reader
+-system_admin
+---admin
+---editor
+-----author
+-----reader
 	
 And a set of actions:
 
-  do_stuff
-	do_editor_stuff
-  do_admin_stuff
-	do_system_stuff
+-do_stuff
+-do_editor_stuff
+-do_admin_stuff
+-do_system_stuff
 	
 You can declare your action authorization like so:
 
