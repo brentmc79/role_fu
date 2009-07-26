@@ -6,11 +6,11 @@ RoleFu is a Rails plugin that enables role-base authorization via a generator sc
 
 1. Install the plugin
 
-	script/plugin install git://github.com/brentmc79/role_fu.git
+		script/plugin install git://github.com/brentmc79/role_fu.git
 
 2. Generate the migration
 
-	script/generate role_fu
+		script/generate role_fu
 	
 	If the model that you're adding roles to is something other than User, then you may want/need to change the :user_id column for RoleMapping to something else.
 
@@ -48,11 +48,26 @@ RoleFu assumes that you're using some form of authorization that exposes the act
 
 Given a set of roles:
 
-* system_admin
-** admin
-** editor
-*** author
-*** reader
+  system_admin
+    admin
+    editor
+      author
+      reader
+	
+And a set of actions:
+
+  do_stuff
+	do_editor_stuff
+  do_admin_stuff
+	do_system_stuff
+	
+You can declare your action authorization like so:
+
+		has_role_fu :do_stuff => [:author, :reader], :do_editor_stuff => :editor, :do_admin_stuff => {:only => :admin}, :do_system_stuff => :system_admin
+
+This allows authors, readers, or anyone with a higher role to do_stuff.  Editors or higher can do_editor_stuff.  Only admins can do_admin_stuff.  Using the :only option explicity states the accepted role and DOESN'T take into account the role hierarchy.  In other words, admins can do admin stuff, but the parent role system_admin can't.
+
+So basically your options for each action are a symbol representing a single role, an array of roles, or a hash with the :only key and role values.  Also, not declaring authorizations for an action will allow it to accept any role.
 
 
 Copyright (c) 2009 Brent Collier, released under the MIT license
