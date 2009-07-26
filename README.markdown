@@ -36,7 +36,9 @@ RoleFu is a Rails plugin that enables role-base authorization via a generator sc
 
 ## Configuration ##
 
-All of the configuration happens in the controllers.  The has_role_fu method expects a hash where the keys are the action names, and the values can be one of two things:
+All of the configuration happens in the controllers.  The has_role_fu method expects a hash where the keys are the action names, and the values can be one of three things:
+
+1. A symbol representing the accepted role.
 
 1. An array of role names, like [:admin, :author, :editor].  This will allow admins, authors, editors, OR any of their sub-roles to perform this action.  Note that every Role can have a parent role, and/or one or more lesser roles.
 
@@ -66,11 +68,11 @@ You can declare your action authorization like so:
 	has_role_fu :do_stuff => [:author, :reader], 
 				:do_editor_stuff => :editor, 
 				:do_admin_stuff => {:only => :admin}, 
-				:do_system_stuff => :system_admin
+				:do_system_stuff => :system_admin,
+				:user_alias => :active_account
 
-This allows authors, readers, or anyone with a higher role to do_stuff.  Editors or higher can do_editor_stuff.  Only admins can do_admin_stuff.  Using the :only option explicity states the accepted role and DOESN'T take into account the role hierarchy.  In other words, admins can do admin stuff, but the parent role system_admin can't.
+This allows authors, readers, or anyone with a higher role to do_stuff.  Editors or higher can do_editor_stuff.  Only admins can do_admin_stuff.  Using the :only option explicity states the accepted role and DOESN'T take into account the role hierarchy.  In other words, admins can do admin stuff, but the parent role system_admin can't.  The :user_alias option tells role_fu to retrieve the "user" by calling the :active_account method, rather than the default :current_user.
 
-So basically your options for each action are a symbol representing a single role, an array of roles, or a hash with the :only key and role values.  Also, not declaring authorizations for an action will allow it to accept any role.
 
 
 Copyright (c) 2009 Brent Collier, released under the MIT license
